@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "464519336986",
+    "firebase_url": "https://ifra-3d775.firebaseio.com",
+    "project_id": "ifra-3d775",
+    "storage_bucket": "ifra-3d775.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464519336986:android:25366b58584b88ddddeda3",
+        "android_client_info": {
+          "package_name": "in.org.sosc.ifrauser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "464519336986-k97df02q331599ugl2efk7dgjma9d69h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs2cml4JuelDzt_CimQ-817Rz8f-6lDgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "464519336986-k97df02q331599ugl2efk7dgjma9d69h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
