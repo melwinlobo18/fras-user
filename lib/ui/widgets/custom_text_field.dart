@@ -6,8 +6,15 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final Function validator;
   final TextInputType textInputType;
+  final InputBorder inputBorder;
+  final int maxLines;
   CustomTextField(
-      {this.controller, this.hintText, this.validator, this.textInputType});
+      {this.controller,
+      this.hintText,
+      this.validator,
+      this.textInputType,
+      this.inputBorder,
+      this.maxLines});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +22,7 @@ class CustomTextField extends StatelessWidget {
       cursorColor: Colors.white,
       controller: controller,
       keyboardType: textInputType,
+      maxLines: maxLines,
       style: TextStyle(
         color: Colors.white,
         fontFamily: "Consolas",
@@ -33,16 +41,19 @@ class CustomTextField extends StatelessWidget {
           ),
           onPressed: () => controller.clear(),
         ),
-        focusedBorder: UnderlineInputBorder(
+        errorStyle: TextStyle(
+          color: kBittersweet,
+        ),
+        focusedBorder: inputBorder.copyWith(
           borderSide: BorderSide(color: Colors.white),
         ),
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: inputBorder.copyWith(
           borderSide: BorderSide(color: Colors.white),
         ),
-        errorBorder: UnderlineInputBorder(
+        errorBorder: inputBorder.copyWith(
           borderSide: BorderSide(color: kBittersweet),
         ),
-        focusedErrorBorder: UnderlineInputBorder(
+        focusedErrorBorder: inputBorder.copyWith(
           borderSide: BorderSide(color: kBittersweet),
         ),
       ),

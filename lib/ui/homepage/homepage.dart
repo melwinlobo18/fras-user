@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:ifrauser/constants/constants.dart';
 import 'package:ifrauser/services/image_service.dart';
 import 'package:ifrauser/services/location_service.dart';
-import 'package:ifrauser/ui/homepage/home_title/home_title.dart';
+import 'package:ifrauser/ui/widgets/custom_fab.dart';
+import 'package:ifrauser/ui/widgets/title.dart';
 import 'package:ifrauser/ui/homepage/image_list/image_list.dart';
 import 'package:ifrauser/ui/widgets/alert.dart';
 import 'package:ifrauser/ui/widgets/custom_text_field.dart';
@@ -62,20 +63,10 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Color(0xFF222222),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActionButton.extended(
+          floatingActionButton: CustomFAB(
             backgroundColor:
                 _isUploading ? kPrimaryColor.withOpacity(0.5) : kPrimaryColor,
-            label: Text(
-              _isUploading ? 'Reporting...' : 'REPORT SIGHTING',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontFamily: "Consolas",
-              ),
-            ),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            isExtended: true,
+            buttonTitle: _isUploading ? 'Reporting...' : 'REPORT SIGHTING',
             onPressed: _validate,
           ),
           body: SafeArea(
@@ -123,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: Text(
                         'Please provide the precise location of the sighting.',
                         style: TextStyle(
@@ -138,6 +129,8 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           child: CustomTextField(
                             textInputType: TextInputType.multiline,
+                            inputBorder: OutlineInputBorder(),
+                            maxLines: 2,
                             validator: (address) {
                               if (address.isEmpty)
                                 return 'Please enter an address';
@@ -229,6 +222,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     CustomTextField(
                       textInputType: TextInputType.text,
+                      inputBorder: UnderlineInputBorder(),
                       hintText: 'Eg. 1234567890',
                       controller: _contactController,
                     ),

@@ -1,0 +1,14 @@
+{
+  "name" : "Shreyas Baliga",
+  "issueNumber" : 1,
+  "missingDate" : "11 March 2020 at 00:00:00 UTC+5:30",
+  "missingFrom" : "Mangaluru",
+  "age" : 20,
+  "sex" : "M",
+  "race" : "Indian",
+  "hairColor" : "Black",
+  "eyeColor" : "Black",
+  "height" : 5.4,
+  "weight" : 60,
+  "imageUrl": ""
+}
