@@ -35,10 +35,13 @@ class _HomePageState extends State<HomePage> {
   final List<String> _radioValueText = ['Yes', 'No', 'Not Sure'];
   bool _isUploading = false;
   bool _isSubmitPressed = false;
+  bool _isPersonDescriptionVisible = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _contactController = TextEditingController();
+  final TextEditingController _personDescriptionController =
+      TextEditingController();
 
   final CollectionReference ref = fb.firestore().collection('sightings');
 
@@ -47,6 +50,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     LocationService.fetchLocationFromGps(
         locationController: _locationController);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _locationController.dispose();
+    _contactController.dispose();
+    _personDescriptionController.clear();
   }
 
   @override
@@ -64,8 +75,7 @@ class _HomePageState extends State<HomePage> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: CustomFAB(
-            backgroundColor:
-                _isUploading ? kPrimaryColor.withOpacity(0.5) : kPrimaryColor,
+            backgroundColor: _isUploading ? Color(0xFF9DFFD2) : kPrimaryColor,
             buttonTitle: _isUploading ? 'Reporting...' : 'REPORT SIGHTING',
             onPressed: _validate,
           ),
@@ -197,6 +207,35 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
+                    Visibility(
+                      visible: _isPersonDescriptionVisible,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: height * 0.05),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Please provide more details on the accompanying person.',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontFamily: "Consolas",
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            CustomTextField(
+                              textInputType: TextInputType.multiline,
+                              inputBorder: OutlineInputBorder(),
+                              maxLines: 3,
+                              hintText: 'Eg. Height, Skin Tone etc',
+                              controller: _personDescriptionController,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: height * 0.03,
                     ),
@@ -266,7 +305,9 @@ class _HomePageState extends State<HomePage> {
                 'latitude': location.lat,
                 'longitude': location.lng,
                 'wasAlone': _radioValueText[_selectedRadioValue],
-                'contactDetails': _contactController.text
+                'contactDetails': _contactController.text,
+                'missingPersonId': 'Z1QkAf77Fg5hskPzfg45',
+                'additionalPersonDescription': _personDescriptionController.text
               };
               await ref.add(map).then((value) {
                 setState(() {
@@ -275,6 +316,7 @@ class _HomePageState extends State<HomePage> {
                   _imagesList.clear();
                   _downloadUrlList.clear();
                   _locationController.clear();
+                  _personDescriptionController.clear();
                   _selectedRadioValue = 2;
                   _contactController.clear();
                   _isSubmitPressed = false;
@@ -311,6 +353,9 @@ class _HomePageState extends State<HomePage> {
   _handleRadioValueChange(int selectedValue) {
     setState(() {
       _selectedRadioValue = selectedValue;
+      (selectedValue == 1)
+          ? _isPersonDescriptionVisible = true
+          : _isPersonDescriptionVisible = false;
     });
   }
 }

@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 
 class CustomFAB extends StatelessWidget {
   final Color backgroundColor;
+  final Color textColor;
   final String buttonTitle;
   final Function onPressed;
+  final BorderRadius borderRadius;
 
-  CustomFAB({this.backgroundColor, this.buttonTitle, this.onPressed});
+  CustomFAB(
+      {this.backgroundColor,
+      this.buttonTitle,
+      this.onPressed,
+      this.borderRadius,
+      this.textColor});
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
@@ -13,12 +20,13 @@ class CustomFAB extends StatelessWidget {
       label: Text(
         buttonTitle,
         style: TextStyle(
-          color: Colors.black,
+          color: textColor ?? Colors.black,
           fontWeight: FontWeight.bold,
           fontFamily: "Consolas",
         ),
       ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(
+          borderRadius: borderRadius ?? BorderRadius.circular(20)),
       isExtended: true,
       onPressed: onPressed,
     );
