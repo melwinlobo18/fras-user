@@ -6,7 +6,7 @@ import 'package:ifrauser/services/image_service.dart';
 import 'package:ifrauser/services/location_service.dart';
 import 'package:ifrauser/ui/widgets/custom_fab.dart';
 import 'package:ifrauser/ui/widgets/title.dart';
-import 'package:ifrauser/ui/homepage/image_list/image_list.dart';
+import 'package:ifrauser/ui/sighting_details_page/image_list/image_list.dart';
 import 'package:ifrauser/ui/widgets/alert.dart';
 import 'package:ifrauser/ui/widgets/custom_text_field.dart';
 import 'package:ifrauser/ui/widgets/radio_button.dart';
@@ -16,12 +16,12 @@ import 'package:universal_html/prefer_universal/html.dart' as html;
 import 'package:firebase/firebase.dart' as fb;
 import 'dart:math';
 
-class HomePage extends StatefulWidget {
+class DetailsPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _DetailsPageState createState() => _DetailsPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DetailsPageState extends State<DetailsPage> {
   String name = '';
   String error;
   List<Uint8List> _imagesList = [];

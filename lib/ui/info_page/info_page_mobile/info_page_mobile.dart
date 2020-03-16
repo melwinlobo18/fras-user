@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifrauser/constants/constants.dart';
 import 'package:ifrauser/models/missing_person/missing_person.dart';
-import 'package:ifrauser/ui/homepage/homepage.dart';
 import 'package:intl/intl.dart';
 
 class InfoPageMobile extends StatelessWidget {

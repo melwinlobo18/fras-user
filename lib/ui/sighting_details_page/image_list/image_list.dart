@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:ifrauser/constants/constants.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:universal_html/prefer_universal/html.dart' as html;
@@ -59,43 +57,32 @@ class _ImageListState extends State<ImageList> {
   }
 
   Future getImage() async {
-    if (kIsWeb) {
-      final html.InputElement input = html.document.createElement('input');
-      input
-        ..type = 'file'
-        ..accept = 'image/*';
+    final html.InputElement input = html.document.createElement('input');
+    input
+      ..type = 'file'
+      ..accept = 'image/*';
 
-      input.onChange.listen((e) {
-        if (input.files.isEmpty) return;
-        final reader = html.FileReader();
-        reader.readAsDataUrl(input.files[0]);
-        reader.onError.listen((err) => setState(() {
-              error = err.toString();
-            }));
-        reader.onLoad.first.then((res) {
-          final encoded = reader.result as String;
-          final stripped =
-              encoded.replaceFirst(RegExp(r'data:image/[^;]+;base64,'), '');
+    input.onChange.listen((e) {
+      if (input.files.isEmpty) return;
+      final reader = html.FileReader();
+      reader.readAsDataUrl(input.files[0]);
+      reader.onError.listen((err) => setState(() {
+            error = err.toString();
+          }));
+      reader.onLoad.first.then((res) {
+        final encoded = reader.result as String;
+        final stripped =
+            encoded.replaceFirst(RegExp(r'data:image/[^;]+;base64,'), '');
 
-          setState(() {
-            widget.images.add(input.files[0]);
-            name = input.files[0].name;
-            widget.imagesList.add(base64.decode(stripped));
-            error = null;
-          });
+        setState(() {
+          widget.images.add(input.files[0]);
+          name = input.files[0].name;
+          widget.imagesList.add(base64.decode(stripped));
+          error = null;
         });
       });
-      input.click();
-    } else {
-      await ImagePicker.pickImage(source: ImageSource.camera)
-          .then((image) async {
-        if (image != null) {
-          setState(() {
-            widget.imagesList.add(image.readAsBytesSync());
-          });
-        }
-      });
-    }
+    });
+    input.click();
   }
 
   List<Widget> getImagesList() {

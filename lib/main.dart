@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ifrauser/ui/homepage/homepage.dart';
 import 'package:firebase/firebase.dart' as fb;
-import 'package:ifrauser/ui/info_page/info_page.dart';
+import 'package:ifrauser/ui/splash_screen.dart';
 
 void main() {
   try {
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: InfoPage(),
+      home: SplashScreen(),
     );
   }
 }

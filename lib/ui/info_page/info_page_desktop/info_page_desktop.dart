@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ifrauser/constants/constants.dart';
 import 'package:ifrauser/models/missing_person/missing_person.dart';
-import 'package:ifrauser/ui/homepage/homepage.dart';
+import 'package:ifrauser/ui/sighting_details_page/sighting_details_page.dart';
 import 'package:intl/intl.dart';
 
 class InfoPageDesktop extends StatelessWidget {
@@ -116,7 +116,7 @@ class InfoPageDesktop extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomePage(),
+                              builder: (context) => DetailsPage(),
                             ),
                           );
                         },
