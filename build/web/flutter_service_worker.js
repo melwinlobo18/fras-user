@@ -4,6 +4,7 @@ const RESOURCES = {
   "/assets\AssetManifest.json": "2efbb41d7877d10aac9d091f58ccd7b9",
 "/assets\assets\fonts\Consolas-Bold.ttf": "a029870eeb5b0f5978e4efa1008d239b",
 "/assets\assets\fonts\Consolas.ttf": "44799a64a98468667480348bcab0de9a",
+"/assets\assets\images\detective.png": "b65b67da30002d04b6ac5b85cb06b3f7",
 "/assets\FontManifest.json": "01700ba55b08a6141f33e168c4a6c22f",
 "/assets\fonts\MaterialIcons-Regular.ttf": "56d3ffdef7a25659eab6a68a3fbfaf16",
 "/assets\LICENSE": "ed348051ca14f8d29da23994579e34b3",
@@ -26,7 +27,7 @@ const RESOURCES = {
 "/icons\Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "/icons\Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "/index.html": "cc00b0fbc3da189c8742f0dea80fdeaf",
-"/main.dart.js": "8fbcc77094e2818c6f8cfc28a3444768",
+"/main.dart.js": "6ed9b9794428da5a236a3b2d6bfe9d0b",
 "/manifest.json": "6d602f34e8743279799c8a0af9ed7da8"
 };
 

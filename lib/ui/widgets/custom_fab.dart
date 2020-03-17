@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ifrauser/constants/constants.dart';
 
 class CustomFAB extends StatelessWidget {
   final Color backgroundColor;
@@ -26,6 +27,7 @@ class CustomFAB extends StatelessWidget {
         ),
       ),
       shape: RoundedRectangleBorder(
+          side: BorderSide(color: kPrimaryColor),
           borderRadius: borderRadius ?? BorderRadius.circular(20)),
       isExtended: true,
       onPressed: onPressed,

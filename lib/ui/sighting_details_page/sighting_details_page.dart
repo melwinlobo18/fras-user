@@ -76,12 +76,19 @@ class _SightingDetailsPageState extends State<SightingDetailsPage> {
         absorbing: _isUploading,
         child: Scaffold(
           backgroundColor: Color(0xFF222222),
+          appBar: PreferredSize(
+            preferredSize: Size(width, height * 0.15),
+            child: HomeTitle(height: height),
+          ),
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: CustomFAB(
-            backgroundColor: _isUploading ? Color(0xFF9DFFD2) : kPrimaryColor,
-            buttonTitle: _isUploading ? 'Reporting...' : 'REPORT SIGHTING',
-            onPressed: _validate,
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: CustomFAB(
+              backgroundColor: _isUploading ? Color(0xFF9DFFD2) : kPrimaryColor,
+              buttonTitle: _isUploading ? 'Reporting...' : 'REPORT SIGHTING',
+              onPressed: _validate,
+            ),
           ),
           body: SafeArea(
             child: Padding(
@@ -90,7 +97,6 @@ class _SightingDetailsPageState extends State<SightingDetailsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    HomeTitle(height: height),
                     Text(
                       'Add Images',
                       style: TextStyle(

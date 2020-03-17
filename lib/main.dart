@@ -1,6 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
+import 'package:ifrauser/ui/error_page/error_page.dart';
+import 'package:ifrauser/ui/info_page/info_page.dart';
 import 'package:ifrauser/ui/splash_screen.dart';
 
 void main() {

@@ -11,10 +11,9 @@ class HomeTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: height * 0.05),
+    return Container(
+      color: Color(0xFF262626),
+      child: Center(
         child: RichText(
           text: TextSpan(
             text: 'm',

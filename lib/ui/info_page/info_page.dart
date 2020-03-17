@@ -58,23 +58,33 @@ class _InfoPageState extends State<InfoPage> {
     diagonalRatio = sqrt((width * width) + (height * height));
     return Scaffold(
       backgroundColor: Color(0xFF222222),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:
-          (ScreenUtility.isDesktop(context) || (_missingPerson == null))
-              ? null
-              : CustomFAB(
-                  backgroundColor: Colors.black,
-                  textColor: kPrimaryColor,
-                  buttonTitle: 'REPORT SIGHTING',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SightingDetailsPage()),
-                    );
-                  },
-                  borderRadius: BorderRadius.zero,
-                ),
+      appBar: PreferredSize(
+        preferredSize: Size(width, height * 0.15),
+        child: HomeTitle(height: height),
+      ),
+      floatingActionButtonLocation: ScreenUtility.isDesktop(context)
+          ? FloatingActionButtonLocation.endFloat
+          : FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: (_missingPerson == null)
+          ? null
+          : Padding(
+              padding: ScreenUtility.isDesktop(context)
+                  ? EdgeInsets.only(right: 20, bottom: 50)
+                  : EdgeInsets.zero,
+              child: CustomFAB(
+                backgroundColor: Color(0xFF222222),
+                textColor: kPrimaryColor,
+                buttonTitle: 'REPORT SIGHTING',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SightingDetailsPage()),
+                  );
+                },
+                borderRadius: BorderRadius.zero,
+              ),
+            ),
       body: _isFetching
           ? Center(
               child: CircularProgressIndicator(
@@ -85,22 +95,18 @@ class _InfoPageState extends State<InfoPage> {
               ? ErrorPage()
               : Column(
                   children: <Widget>[
-                    HomeTitle(height: height),
                     Expanded(
-                      child: Container(
-                        color: Colors.white,
-                        child: ScreenUtility.isDesktop(context)
-                            ? InfoPageDesktop(
-                                diagonalRatio: diagonalRatio,
-                                missingPerson: _missingPerson,
-                                width: width,
-                                height: height)
-                            : InfoPageMobile(
-                                diagonalRatio: diagonalRatio,
-                                missingPerson: _missingPerson,
-                                width: width,
-                                height: height),
-                      ),
+                      child: ScreenUtility.isDesktop(context)
+                          ? InfoPageDesktop(
+                              diagonalRatio: diagonalRatio,
+                              missingPerson: _missingPerson,
+                              width: width,
+                              height: height)
+                          : InfoPageMobile(
+                              diagonalRatio: diagonalRatio,
+                              missingPerson: _missingPerson,
+                              width: width,
+                              height: height),
                     )
                   ],
                 ),
