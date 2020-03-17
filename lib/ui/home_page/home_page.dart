@@ -2,10 +2,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:ifrauser/constants/constants.dart';
 import 'package:ifrauser/models/missing_person/missing_person.dart';
+import 'package:ifrauser/services/location_service.dart';
 import 'package:ifrauser/services/missing_person_service.dart';
-import 'package:ifrauser/ui/info_page/info_page.dart';
+import 'package:ifrauser/ui/home_page/missing_persons/missing_person_list.dart';
+import 'package:ifrauser/ui/home_page/missing_persons/no_missing_persons.dart';
 import 'package:ifrauser/ui/widgets/title.dart';
-import 'package:ifrauser/utility/screen_utility.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,11 +19,15 @@ class _HomePageState extends State<HomePage> {
   double diagonalRatio;
   bool _isFetching = true;
   List<MissingPerson> _missingPersonList;
+  List<MissingPerson> _filteredMissingPersonList;
+  int _popupMenuValue = 0;
+  String _userDistrict;
 
   _fetchAllMissingPersonDetails() async {
     await MissingPersonService.fetchAllMissingPersonDetails()
         .then((missingPersonList) {
       _missingPersonList = missingPersonList;
+      _filteredMissingPersonList = missingPersonList;
       setState(() {
         _isFetching = false;
       });
@@ -43,72 +48,143 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color(0xFF222222),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            HomeTitle(height: height),
-            _isFetching
-                ? Container(
-                    height: height,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(kPrimaryColor),
-                      ),
-                    ),
-                  )
-                : Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.03),
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      runSpacing: height * 0.04,
-                      spacing: width * 0.02,
-                      children: _missingPersonList.map((missingPerson) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => InfoPage(
-                                  missingPerson: missingPerson,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                height: ScreenUtility.isMobile(context)
-                                    ? diagonalRatio * 0.1
-                                    : diagonalRatio * 0.07,
-                                width: ScreenUtility.isMobile(context)
-                                    ? diagonalRatio * 0.1
-                                    : diagonalRatio * 0.07,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            missingPerson.imageUrl),
-                                        fit: BoxFit.cover)),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                missingPerson.name,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Text(
-                                missingPerson.missingFrom,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  )
-          ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              HomeTitle(height: height),
+              FilterList(
+                onSelected: (selectedValue) {
+                  setState(() {
+                    _popupMenuValue = selectedValue;
+                    _fetchFilteredData(selectedValue);
+                  });
+                },
+                popupMenuValue: _popupMenuValue,
+                userDistrict: _userDistrict,
+              ),
+              _isFetching
+                  ? LoadingBuilder(height: height)
+                  : (_filteredMissingPersonList.isEmpty)
+                      ? NoMissingPersons(height: height)
+                      : MissingPersonsList(
+                          height: height,
+                          width: width,
+                          filteredMissingPersonList: _filteredMissingPersonList,
+                          diagonalRatio: diagonalRatio)
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  _fetchFilteredData(int selectedValue) {
+    switch (selectedValue) {
+      case 0:
+        setState(() {
+          _filteredMissingPersonList = _missingPersonList;
+        });
+        break;
+      case 1:
+        setState(() {
+          _filteredMissingPersonList = _missingPersonList
+              .where((missingPerson) =>
+                  DateTime.now().difference(missingPerson.missingDate).inDays <=
+                  7)
+              .toList();
+        });
+        break;
+      case 2:
+        setState(() {
+          _isFetching = true;
+        });
+        LocationService.fetchLocationFromGps().then((district) {
+          setState(() {
+            _userDistrict = district ?? "All";
+            print(_userDistrict);
+            _filteredMissingPersonList = _missingPersonList
+                .where(
+                    (missingPerson) => missingPerson.district == district ?? "")
+                .toList();
+            _isFetching = false;
+          });
+        });
+        break;
+    }
+  }
+}
+
+class LoadingBuilder extends StatelessWidget {
+  const LoadingBuilder({
+    Key key,
+    @required this.height,
+  }) : super(key: key);
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height * 0.6,
+      child: Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation(kPrimaryColor),
+        ),
+      ),
+    );
+  }
+}
+
+class FilterList extends StatelessWidget {
+  const FilterList({
+    Key key,
+    @required this.popupMenuValue,
+    @required this.userDistrict,
+    @required this.onSelected,
+  }) : super(key: key);
+
+  final int popupMenuValue;
+  final String userDistrict;
+  final Function onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          (popupMenuValue == 0)
+              ? "All"
+              : (popupMenuValue == 1) ? "Past 7 days" : "${userDistrict ?? ''}",
+          style: TextStyle(color: Colors.white),
+        ),
+        PopupMenuButton(
+          icon: Icon(
+            Icons.filter_list,
+            color: Colors.white,
+          ),
+          initialValue: popupMenuValue,
+          onSelected: onSelected,
+          itemBuilder: (context) {
+            return [
+              PopupMenuItem(
+                child: Text('All'),
+                value: 0,
+              ),
+              PopupMenuItem(
+                child: Text('Recent'),
+                value: 1,
+              ),
+              PopupMenuItem(
+                child: Text('Nearby'),
+                value: 2,
+              )
+            ];
+          },
+        )
+      ],
     );
   }
 }

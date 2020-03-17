@@ -28,6 +28,7 @@ dependencies:
   firebase: ^7.2.1
   rflutter_alert: ^1.0.3
   intl: ^0.16.1
+  bot_toast: ^2.3.0
 
 dev_dependencies:
   flutter_test:

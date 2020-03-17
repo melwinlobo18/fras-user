@@ -3,6 +3,7 @@
   "issueNumber" : 1,
   "missingDate" : "11 March 2020 at 00:00:00 UTC+5:30",
   "missingFrom" : "Mangaluru",
+  "district": "Dakshina Kannada",
   "age" : 20,
   "sex" : "M",
   "race" : "Indian",
@@ -10,5 +11,7 @@
   "eyeColor" : "Black",
   "height" : 5.4,
   "weight" : 60,
-  "imageUrl": ""
+  "imageUrl": "",
+  "lat" : 13.532658,
+  "lng" : 75.3557927
 }

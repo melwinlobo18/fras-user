@@ -75,26 +75,26 @@ exports.onSightedPersonReported = functions.firestore
                     accuracy: 0
                 };
                 let positiveImagesConfidenceList = [];
-                Object.keys(predictionMap).map(function(key, index) {
-                    for(prediction of predictionMap[key]){
-                        if(prediction['isIdentical'] === true){
+                Object.keys(predictionMap).map(function (key, index) {
+                    for (prediction of predictionMap[key]) {
+                        if (prediction['isIdentical'] === true) {
                             positiveImagesConfidenceList.push(prediction['confidence']);
-                            if(prediction['confidence'] > imageWithHighestAccuracy['accuracy']){
+                            if (prediction['confidence'] > imageWithHighestAccuracy['accuracy']) {
                                 imageWithHighestAccuracy['image'] = sightedPerson['images'][index];
                                 imageWithHighestAccuracy['accuracy'] = prediction['confidence'];
                             }
                         }
                     }
-                  });
+                });
 
-                  let accuracy = 0;
-                  for(acc of positiveImagesConfidenceList){
-                      accuracy += acc;
-                  }
-                  let avgAccuracy = 0;
-                  if(positiveImagesConfidenceList.length !== 0){
-                    avgAccuracy = accuracy/positiveImagesConfidenceList.length;
-                  }
+                let accuracy = 0;
+                for (acc of positiveImagesConfidenceList) {
+                    accuracy += acc;
+                }
+                let avgAccuracy = 0;
+                if (positiveImagesConfidenceList.length !== 0) {
+                    avgAccuracy = accuracy / positiveImagesConfidenceList.length;
+                }
 
                 await admin.firestore().collection("sightings").doc(snap.id).set({
                     'predictions': predictionMap,
@@ -107,3 +107,65 @@ exports.onSightedPersonReported = functions.firestore
             });
         }
     });
+
+exports.populateData = functions.https.onRequest((req, res) => {
+    let data = [{
+        "faceId": "0c9a3361-9398-45e3-91ff-59b71013788d",
+        "name": "Melwin Lobo",
+        "issueNumber": 1,
+        "missingDate": new Date('March 11, 2020 00:00:00').toISOString(),
+        "missingFrom": "Koppa, Chikmagalur",
+        "age": 20,
+        "sex": "M",
+        "race": "Indian",
+        "hairColor": "Black",
+        "eyeColor": "Black",
+        "height": 5.4,
+        "weight": 60,
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/ifra-3d775.appspot.com/o/missing_persons%2FMelwin%20(2).jpg?alt=media&token=4807891c-d590-4d78-a493-5d1d825e8d4e",
+        "lat": 13.532658,
+        "lng": 75.3557927
+    }, {
+        "faceId": "9416d4e3-56e0-4256-bf27-ba8d9270ca2e",
+        "name": "Shreyas Baliga",
+        "issueNumber": 2,
+        "missingDate": new Date('March 15, 2020 00:00:00').toISOString(),
+        "missingFrom": "Urwa, Mangaluru",
+        "age": 20,
+        "sex": "M",
+        "race": "Indian",
+        "hairColor": "Black",
+        "eyeColor": "Black",
+        "height": 5.4,
+        "weight": 60,
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/ifra-3d775.appspot.com/o/missing_persons%2Fshreyas.jpg?alt=media&token=ab419344-de35-408f-89b1-4714cde461b0",
+        "lat": 12.8967709,
+        "lng": 74.8346296
+    }, {
+        "faceId": "ec4989c0-836e-4418-9307-35ea839c9aed",
+        "name": "Adithya M Suvarna",
+        "issueNumber": 3,
+        "missingDate": new Date('March 11, 2019 00:00:00').toISOString(),
+        "missingFrom": "Mannagudda, Mangaluru",
+        "age": 20,
+        "sex": "M",
+        "race": "Indian",
+        "hairColor": "Black",
+        "eyeColor": "Black",
+        "height": 5.4,
+        "weight": 60,
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/ifra-3d775.appspot.com/o/missing_persons%2Fadi.jpg?alt=media&token=87e8f950-496a-425c-a94d-b7ae77c35239",
+        "lat": 12.9127339,
+        "lng": 74.85610919999999
+    }];
+    let promises = [];
+    data.forEach((entry) => {
+        promises.push(admin.firestore().collection("missing_persons").doc(`${data.indexOf(entry) + 1}`).set(entry, { merge: true }));
+    });
+    Promise.all(promises).then(result => {
+        res.send("Successful");
+        return;
+    }).catch(error => {
+        console.error(error)
+    });
+});

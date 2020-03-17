@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase/firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +17,12 @@ import 'package:universal_html/prefer_universal/html.dart' as html;
 import 'package:firebase/firebase.dart' as fb;
 import 'dart:math';
 
-class DetailsPage extends StatefulWidget {
+class SightingDetailsPage extends StatefulWidget {
   @override
-  _DetailsPageState createState() => _DetailsPageState();
+  _SightingDetailsPageState createState() => _SightingDetailsPageState();
 }
 
-class _DetailsPageState extends State<DetailsPage> {
+class _SightingDetailsPageState extends State<SightingDetailsPage> {
   String name = '';
   String error;
   List<Uint8List> _imagesList = [];
@@ -42,6 +43,9 @@ class _DetailsPageState extends State<DetailsPage> {
   final TextEditingController _contactController = TextEditingController();
   final TextEditingController _personDescriptionController =
       TextEditingController();
+  final FocusNode _locationFocusNode = FocusNode();
+  final FocusNode _contactFocusNode = FocusNode();
+  final FocusNode _personDescriptionFocusNode = FocusNode();
 
   final CollectionReference ref = fb.firestore().collection('sightings');
 

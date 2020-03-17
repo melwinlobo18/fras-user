@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
 import 'package:ifrauser/ui/splash_screen.dart';
@@ -18,12 +19,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'IFRA',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BotToastInit(
+      child: MaterialApp(
+        title: 'IFRA',
+        navigatorObservers: [BotToastNavigatorObserver()],
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: SplashScreen(),
       ),
-      home: SplashScreen(),
     );
   }
 }

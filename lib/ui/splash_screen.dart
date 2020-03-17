@@ -30,18 +30,21 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigationRoute() {
     final int issueNumber = _fetchIssueNumber();
     if (issueNumber == null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+          (Route<dynamic> route) => false);
     } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
             builder: (context) => InfoPage(
-                  issueNumber: issueNumber,
-                )),
-      );
+              issueNumber: issueNumber,
+            ),
+          ),
+          (Route<dynamic> route) => false);
     }
   }
 

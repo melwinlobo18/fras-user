@@ -116,7 +116,7 @@ class InfoPageDesktop extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DetailsPage(),
+                              builder: (context) => SightingDetailsPage(),
                             ),
                           );
                         },

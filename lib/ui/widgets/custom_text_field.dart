@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:ifrauser/constants/constants.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -29,17 +30,22 @@ class CustomTextField extends StatelessWidget {
       ),
       validator: validator,
       decoration: InputDecoration(
+        isDense: true,
         hintText: hintText,
         hintStyle: TextStyle(
           color: Colors.grey,
           fontFamily: "Consolas",
         ),
-        suffixIcon: IconButton(
-          icon: Icon(
-            Icons.clear,
-            color: Colors.grey,
+        suffixIcon: GestureDetector(
+          onTap: () {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              controller.clear();
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6.0),
+            child: Icon(Icons.cancel, color: Colors.grey, size: 18.0),
           ),
-          onPressed: () => controller.clear(),
         ),
         errorStyle: TextStyle(
           color: kBittersweet,
