@@ -1,16 +1,17 @@
-# ifrauser
+<p align="center">
+  <h1>Facial Recognition based AMBER Alert System (F.R.A.S)</h1>
+</p>
 
-A new Flutter application.
+F.R.A.S is a system used to improve the existing [AMBER alert](https://amberalert.ojp.gov/) system for better identification🔍 missing persons. This repo consists of a  PWA💻📱 developed using Flutter to report the missing persons. The alert is sent by the police authorities👮‍♂️ using the [Admin Panel](https://github.com/ShreyasBaliga/ifra-admin). You can read more about the project here.
 
-## Getting Started
+# Screenshots
 
-This project is a starting point for a Flutter application.
+<p float="left">
+  <img src="https://storage.googleapis.com/ifra_test/F.R.A.S.png" width="900" height="500" />
+</p>
 
-A few resources to get you started if this is your first Flutter project:
+# Contributors
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<p float="left">
+  <a href="https://github.com/melwinlobo18"><img src="https://avatars2.githubusercontent.com/u/29202917?s=400&v=4" width="110" height="110" /></a>
+</p>
