@@ -119,13 +119,20 @@ class InfoPageMobile extends StatelessWidget {
         SizedBox(
           height: height * 0.05,
         ),
-        ..._dataMap.entries.map((entry) {
-          _isFaded = !_isFaded;
-          return buildInfoTile(
-              title: entry.key,
-              data: entry.value.toString(),
-              isFadedBackground: _isFaded);
-        }).toList()
+        Flexible(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: _dataMap.entries.map((entry) {
+                _isFaded = !_isFaded;
+                return buildInfoTile(
+                    title: entry.key,
+                    data: entry.value.toString(),
+                    isFadedBackground: _isFaded);
+              }).toList(),
+            ),
+          ),
+        )
       ],
     );
   }
@@ -135,20 +142,24 @@ class InfoPageMobile extends StatelessWidget {
       color: isFadedBackground ? Color(0xFF262626) : Color(0xFF222222),
       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(
-                color: kPrimaryColor,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Consolas',
-                height: 2),
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Consolas',
+                  height: 2),
+            ),
           ),
-          Text(
-            data.toUpperCase(),
-            style: TextStyle(
-                fontFamily: 'Consolas', height: 2, color: Colors.white),
+          Expanded(
+            child: Text(
+              data.toUpperCase(),
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  fontFamily: 'Consolas', height: 2, color: Colors.white),
+            ),
           ),
         ],
       ),

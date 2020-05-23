@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ifrauser/constants/constants.dart';
 import 'package:ifrauser/models/missing_person/missing_person.dart';
 import 'package:ifrauser/services/missing_person_service.dart';
-import 'package:ifrauser/ui/error_page/error_page.dart';
+import 'package:ifrauser/ui/not_found_page/not_found_page.dart';
 import 'package:ifrauser/ui/sighting_details_page/sighting_details_page.dart';
 import 'package:ifrauser/ui/info_page/info_page_desktop/info_page_desktop.dart';
 import 'package:ifrauser/ui/info_page/info_page_mobile/info_page_mobile.dart';
@@ -79,7 +79,10 @@ class _InfoPageState extends State<InfoPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SightingDetailsPage()),
+                      builder: (context) => SightingDetailsPage(
+                        missingPerson: widget.missingPerson,
+                      ),
+                    ),
                   );
                 },
                 borderRadius: BorderRadius.zero,
@@ -92,7 +95,7 @@ class _InfoPageState extends State<InfoPage> {
               ),
             )
           : (_missingPerson == null)
-              ? ErrorPage()
+              ? NotFoundPage()
               : Column(
                   children: <Widget>[
                     Expanded(

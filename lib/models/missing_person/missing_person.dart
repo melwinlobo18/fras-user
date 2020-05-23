@@ -20,6 +20,8 @@ class MissingPerson {
   double lat;
   double lng;
   String district;
+  int docId;
+  bool childFound;
 
   MissingPerson(
       {this.name,
@@ -36,7 +38,9 @@ class MissingPerson {
       this.imageUrl,
       this.lat,
       this.lng,
-      this.district});
+      this.district,
+      this.docId,
+      this.childFound});
 
   factory MissingPerson.fromRawJson(String str) =>
       MissingPerson.fromJson(json.decode(str));
@@ -44,24 +48,24 @@ class MissingPerson {
   String toRawJson() => json.encode(toJson());
 
   factory MissingPerson.fromJson(Map<String, dynamic> json) => MissingPerson(
-        name: json["name"] == null ? null : json["name"],
-        issueNumber: json["issueNumber"] == null ? null : json["issueNumber"],
-        missingDate: json["missingDate"] == null
-            ? null
-            : DateTime.parse(json["missingDate"].toString()),
-        missingFrom: json["missingFrom"] == null ? null : json["missingFrom"],
-        district: json["district"] == null ? null : json["district"],
-        age: json["age"] == null ? null : json["age"],
-        sex: json["sex"] == null ? null : json["sex"],
-        race: json["race"] == null ? null : json["race"],
-        hairColor: json["hairColor"] == null ? null : json["hairColor"],
-        eyeColor: json["eyeColor"] == null ? null : json["eyeColor"],
-        height: json["height"] == null ? null : json["height"].toDouble(),
-        weight: json["weight"] == null ? null : json["weight"],
-        imageUrl: json["imageUrl"] == null ? null : json["imageUrl"],
-        lat: json["lat"] == null ? null : json["lat"].toDouble(),
-        lng: json["lng"] == null ? null : json["lng"].toDouble(),
-      );
+      name: json["name"] == null ? null : json["name"],
+      issueNumber: json["issueNumber"] == null ? null : json["issueNumber"],
+      missingDate: json["missingDate"] == null
+          ? null
+          : DateTime.parse(json["missingDate"].toString()),
+      missingFrom: json["missingFrom"] == null ? null : json["missingFrom"],
+      district: json["district"] == null ? null : json["district"],
+      age: json["age"] == null ? null : json["age"],
+      sex: json["sex"] == null ? null : json["sex"],
+      race: json["race"] == null ? null : json["race"],
+      hairColor: json["hairColor"] == null ? null : json["hairColor"],
+      eyeColor: json["eyeColor"] == null ? null : json["eyeColor"],
+      height: json["height"] == null ? null : json["height"].toDouble(),
+      weight: json["weight"] == null ? null : json["weight"],
+      imageUrl: json["imageUrl"] == null ? null : json["imageUrl"],
+      lat: json["lat"] == null ? null : json["lat"].toDouble(),
+      lng: json["lng"] == null ? null : json["lng"].toDouble(),
+      childFound: json["childFound"] == null ? null : json["childFound"]);
 
   Map<String, dynamic> toJson() => {
         "name": name == null ? null : name,

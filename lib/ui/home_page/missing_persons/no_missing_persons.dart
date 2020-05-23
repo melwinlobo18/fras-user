@@ -10,13 +10,10 @@ class NoMissingPersons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height * 0.6,
-      child: Center(
-        child: Text(
-          "No records found",
-          style: TextStyle(color: Colors.grey, fontSize: 20),
-        ),
+    return Center(
+      child: Text(
+        "No records found",
+        style: TextStyle(color: Colors.grey, fontSize: 20),
       ),
     );
   }

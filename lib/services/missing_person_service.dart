@@ -25,7 +25,10 @@ class MissingPersonService {
     final List<DocumentSnapshot> documents = response.docs;
     documents.forEach((doc) {
       MissingPerson missingPerson = MissingPerson.fromJson(doc.data());
-      result.add(missingPerson);
+      missingPerson.docId = int.parse(doc.id);
+      if (!missingPerson.childFound) {
+        result.add(missingPerson);
+      }
     });
     return result;
   }

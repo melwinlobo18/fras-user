@@ -3,6 +3,7 @@ import 'package:firebase/firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ifrauser/constants/constants.dart';
+import 'package:ifrauser/models/missing_person/missing_person.dart';
 import 'package:ifrauser/services/image_service.dart';
 import 'package:ifrauser/services/location_service.dart';
 import 'package:ifrauser/ui/widgets/custom_fab.dart';
@@ -16,8 +17,12 @@ import 'dart:typed_data';
 import 'package:universal_html/prefer_universal/html.dart' as html;
 import 'package:firebase/firebase.dart' as fb;
 import 'dart:math';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SightingDetailsPage extends StatefulWidget {
+  final MissingPerson missingPerson;
+  SightingDetailsPage({this.missingPerson});
   @override
   _SightingDetailsPageState createState() => _SightingDetailsPageState();
 }
@@ -46,14 +51,24 @@ class _SightingDetailsPageState extends State<SightingDetailsPage> {
   final FocusNode _locationFocusNode = FocusNode();
   final FocusNode _contactFocusNode = FocusNode();
   final FocusNode _personDescriptionFocusNode = FocusNode();
+  fb.RemoteConfig rc;
 
   final CollectionReference ref = fb.firestore().collection('sightings');
 
   @override
   void initState() {
     super.initState();
+    initFirebaseConfig();
     LocationService.fetchLocationFromGps(
         locationController: _locationController);
+  }
+
+  initFirebaseConfig() {
+    try {
+      rc = fb.remoteConfig();
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -97,12 +112,15 @@ class _SightingDetailsPageState extends State<SightingDetailsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      'Add Images',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: "Consolas",
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        'Add Images',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: "Consolas",
+                        ),
                       ),
                     ),
                     if (_isSubmitPressed && _imagesList.isEmpty)
@@ -301,7 +319,7 @@ class _SightingDetailsPageState extends State<SightingDetailsPage> {
         if (currentFocus != null) currentFocus.unfocus();
         Future.wait(
           _images.map((image) {
-            return ImageService.uploadImageFile(image, _downloadUrlList,
+            return ImageService.uploadMultipleImageFile(image, _downloadUrlList,
                 imageName: image.name);
           }),
         ).then((_) async {
@@ -316,9 +334,29 @@ class _SightingDetailsPageState extends State<SightingDetailsPage> {
                 'longitude': location.lng,
                 'wasAlone': _radioValueText[_selectedRadioValue],
                 'contactDetails': _contactController.text,
-                'missingPersonId': 'Z1QkAf77Fg5hskPzfg45',
-                'additionalPersonDescription': _personDescriptionController.text
+                'issueNumber': widget.missingPerson.docId,
+                'additionalPersonDescription':
+                    _personDescriptionController.text,
+                'sightedAt': DateTime.now().toIso8601String()
               };
+
+              Map<String, String> headers = {
+                'Content-Type': 'application/json'
+              };
+              final data = jsonEncode(map);
+
+              rc.ensureInitialized().then((_) {
+                rc.fetchAndActivate().then((_) {
+                  http
+                      .post(
+                        rc.getString('face_recognition_server'),
+                        headers: headers,
+                        body: data,
+                      )
+                      .then((value) => print(value.body));
+                });
+              });
+
               await ref.add(map).then((value) {
                 setState(() {
                   _isUploading = false;
@@ -340,6 +378,7 @@ class _SightingDetailsPageState extends State<SightingDetailsPage> {
                     description: "The sighting has been reported.");
               });
             } catch (e) {
+              print(e);
               setState(() {
                 _isUploading = false;
               });

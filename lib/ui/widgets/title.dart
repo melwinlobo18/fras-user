@@ -14,50 +14,58 @@ class HomeTitle extends StatelessWidget {
     return Container(
       color: Color(0xFF262626),
       child: Center(
-        child: RichText(
-          text: TextSpan(
-            text: 'm',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 28,
-              fontFamily: "Consolas",
-            ),
-            children: <TextSpan>[
-              TextSpan(
-                text: 'i',
-                style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 28,
-                  fontFamily: "Consolas",
-                ),
-              ),
-              TextSpan(
-                text: 'ss',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontFamily: "Consolas",
-                ),
-              ),
-              TextSpan(
-                text: 'i',
-                style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 28,
-                  fontFamily: "Consolas",
-                ),
-              ),
-              TextSpan(
-                text: 'ng',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontFamily: "Consolas",
-                ),
-              ),
-            ],
+        child: Text(
+          "F.R.A.S",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 28,
+            fontFamily: "Consolas",
           ),
         ),
+//        child: RichText(
+//          text: TextSpan(
+//            text: 'm',
+//            style: TextStyle(
+//              color: Colors.white,
+//              fontSize: 28,
+//              fontFamily: "Consolas",
+//            ),
+//            children: <TextSpan>[
+//              TextSpan(
+//                text: 'i',
+//                style: TextStyle(
+//                  color: kPrimaryColor,
+//                  fontSize: 28,
+//                  fontFamily: "Consolas",
+//                ),
+//              ),
+//              TextSpan(
+//                text: 'ss',
+//                style: TextStyle(
+//                  color: Colors.white,
+//                  fontSize: 28,
+//                  fontFamily: "Consolas",
+//                ),
+//              ),
+//              TextSpan(
+//                text: 'i',
+//                style: TextStyle(
+//                  color: kPrimaryColor,
+//                  fontSize: 28,
+//                  fontFamily: "Consolas",
+//                ),
+//              ),
+//              TextSpan(
+//                text: 'ng',
+//                style: TextStyle(
+//                  color: Colors.white,
+//                  fontSize: 28,
+//                  fontFamily: "Consolas",
+//                ),
+//              ),
+//            ],
+//          ),
+//        ),
       ),
     );
   }

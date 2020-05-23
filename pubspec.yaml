@@ -29,6 +29,8 @@ dependencies:
   rflutter_alert: ^1.0.3
   intl: ^0.16.1
   bot_toast: ^2.3.0
+  cloud_functions: ^0.4.2+3
+  http:
 
 dev_dependencies:
   flutter_test:

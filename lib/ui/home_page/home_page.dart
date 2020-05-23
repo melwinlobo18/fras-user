@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:ifrauser/constants/constants.dart';
 import 'package:ifrauser/models/missing_person/missing_person.dart';
@@ -8,6 +9,7 @@ import 'package:ifrauser/ui/home_page/missing_persons/missing_person_list.dart';
 import 'package:ifrauser/ui/home_page/missing_persons/no_missing_persons.dart';
 import 'package:ifrauser/ui/widgets/title.dart';
 import 'package:ifrauser/utility/screen_utility.dart';
+import 'package:universal_html/prefer_universal/html.dart' as html;
 
 class HomePage extends StatefulWidget {
   @override
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             _isFetching
                 ? LoadingBuilder(height: height)
                 : (_filteredMissingPersonList.isEmpty)
-                    ? NoMissingPersons(height: height)
+                    ? Expanded(child: NoMissingPersons(height: height))
                     : Flexible(
                         child: MissingPersonsList(
                             height: height,
@@ -224,7 +226,9 @@ class _FilterListState extends State<FilterList> {
                             ? "All"
                             : (widget.menuValue == 1) ? "Recent" : "Nearby",
                         style: TextStyle(
-                            color: kPrimaryColor, fontFamily: "Consolas"),
+                            color: kPrimaryColor,
+                            fontFamily: "Consolas",
+                            fontSize: 18),
                       ),
                       Icon(
                         Icons.arrow_drop_down,
@@ -248,7 +252,7 @@ class _FilterListState extends State<FilterList> {
                         buildMenuOptions(
                             context: context, title: 'Recent', index: 1),
                         buildMenuOptions(
-                            context: context, title: 'Nearby', index: 2),
+                            context: context, title: 'Nearby', index: 2)
                       ],
                     ),
                   ),
@@ -262,7 +266,7 @@ class _FilterListState extends State<FilterList> {
                     (widget.menuValue == 1)
                         ? "Past 7 days"
                         : "${widget.userDistrict ?? ''}",
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -273,6 +277,7 @@ class _FilterListState extends State<FilterList> {
   GestureDetector buildMenuOptions(
       {BuildContext context, String title, int index}) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
         widget.onSelected(index);
         setState(() {
@@ -281,14 +286,15 @@ class _FilterListState extends State<FilterList> {
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.symmetric(vertical: 4),
+        margin: EdgeInsets.symmetric(vertical: 8),
         alignment: Alignment.center,
         child: Text(
           title,
           style: TextStyle(
-            color:
-                (widget.menuValue == index) ? Colors.white : Color(0xFF4A4A4A),
-          ),
+              color: (widget.menuValue == index)
+                  ? Colors.white
+                  : Color(0xFF4A4A4A),
+              fontSize: 18),
         ),
       ),
     );

@@ -1,8 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
-import 'package:ifrauser/ui/error_page/error_page.dart';
-import 'package:ifrauser/ui/info_page/info_page.dart';
 import 'package:ifrauser/ui/splash_screen.dart';
 
 void main() {
@@ -11,6 +9,7 @@ void main() {
         apiKey: 'AIzaSyDQtZa0Ju73LC5s9ZMD4CoSPoF43Yw_rLc',
         projectId: 'ifra-3d775',
         storageBucket: 'ifra-3d775.appspot.com',
+        appId: '1:464519336986:android:25366b58584b88ddddeda3',
         databaseURL: "https://ifra-3d775.firebaseio.com");
     runApp(MyApp());
   } on fb.FirebaseJsNotLoadedException catch (e) {
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BotToastInit(
       child: MaterialApp(
-        title: 'IFRA',
+        title: 'FRAS',
         navigatorObservers: [BotToastNavigatorObserver()],
         theme: ThemeData(
           primarySwatch: Colors.blue,
