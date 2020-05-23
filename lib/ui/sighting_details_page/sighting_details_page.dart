@@ -81,6 +81,7 @@ class _SightingDetailsPageState extends State<SightingDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(rc);
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     diagonalRatio = sqrt((width * width) + (height * height));
@@ -346,7 +347,10 @@ class _SightingDetailsPageState extends State<SightingDetailsPage> {
               final data = jsonEncode(map);
 
               rc.ensureInitialized().then((_) {
+                print("Initialized");
                 rc.fetchAndActivate().then((_) {
+                  print("The server URL is: " +
+                      rc.getString('face_recognition_server'));
                   http
                       .post(
                         rc.getString('face_recognition_server'),
