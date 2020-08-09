@@ -8,10 +8,10 @@ class MissingPersonService {
     MissingPerson missingPerson;
     final CollectionReference ref =
         fb.firestore().collection('missing_persons');
-    final DocumentSnapshot doc =
-        await ref.doc(issueNumber.toString() ?? 'Z1QkAf77Fg5hskPzfg45').get();
+    final DocumentSnapshot doc = await ref.doc(issueNumber.toString()).get();
 
     if (doc.data() != null) missingPerson = MissingPerson.fromJson(doc.data());
+    missingPerson.docId = int.parse(doc.id); //Add this line
     return missingPerson;
   }
 

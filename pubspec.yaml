@@ -30,6 +30,7 @@ dependencies:
   intl: ^0.16.1
   bot_toast: ^2.3.0
   cloud_functions: ^0.4.2+3
+  url_launcher: ^5.4.10
   http:
 
 dev_dependencies:

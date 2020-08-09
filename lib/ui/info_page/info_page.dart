@@ -65,36 +65,37 @@ class _InfoPageState extends State<InfoPage> {
       floatingActionButtonLocation: ScreenUtility.isDesktop(context)
           ? FloatingActionButtonLocation.endFloat
           : FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: (_missingPerson == null)
-          ? null
-          : Padding(
-              padding: ScreenUtility.isDesktop(context)
-                  ? EdgeInsets.only(right: 20, bottom: 50)
-                  : EdgeInsets.zero,
-              child: CustomFAB(
-                backgroundColor: Color(0xFF222222),
-                textColor: kPrimaryColor,
-                buttonTitle: 'REPORT SIGHTING',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SightingDetailsPage(
-                        missingPerson: widget.missingPerson,
-                      ),
-                    ),
-                  );
-                },
-                borderRadius: BorderRadius.zero,
-              ),
-            ),
+      floatingActionButton:
+          (_missingPerson == null || _missingPerson.childFound)
+              ? null
+              : Padding(
+                  padding: ScreenUtility.isDesktop(context)
+                      ? EdgeInsets.only(right: 20, bottom: 50)
+                      : EdgeInsets.zero,
+                  child: CustomFAB(
+                    backgroundColor: Color(0xFF222222),
+                    textColor: kPrimaryColor,
+                    buttonTitle: 'REPORT SIGHTING',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SightingDetailsPage(
+                            missingPerson: _missingPerson,
+                          ),
+                        ),
+                      );
+                    },
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
       body: _isFetching
           ? Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation(kPrimaryColor),
               ),
             )
-          : (_missingPerson == null)
+          : (_missingPerson == null || _missingPerson.childFound)
               ? NotFoundPage()
               : Column(
                   children: <Widget>[

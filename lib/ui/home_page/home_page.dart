@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ifrauser/constants/constants.dart';
 import 'package:ifrauser/models/missing_person/missing_person.dart';
@@ -10,6 +11,7 @@ import 'package:ifrauser/ui/home_page/missing_persons/no_missing_persons.dart';
 import 'package:ifrauser/ui/widgets/title.dart';
 import 'package:ifrauser/utility/screen_utility.dart';
 import 'package:universal_html/prefer_universal/html.dart' as html;
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -74,6 +76,30 @@ class _HomePageState extends State<HomePage> {
               menuValue: _popupMenuValue,
               userDistrict: _userDistrict,
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: RichText(
+                text: TextSpan(
+                  text: '(Note: These images are taken from ',
+                  style: TextStyle(color: Colors.white30),
+                  children: [
+                    TextSpan(
+                      text: 'LFW dataset',
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => _launchURL(
+                            'https://www.kaggle.com/jessicali9530/lfw-dataset'),
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: kPrimaryColor),
+                    ),
+                    TextSpan(
+                      text: ')',
+                      style: TextStyle(color: Colors.white30),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             _isFetching
                 ? LoadingBuilder(height: height)
                 : (_filteredMissingPersonList.isEmpty)
@@ -90,6 +116,14 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   _fetchFilteredData(int selectedValue) {

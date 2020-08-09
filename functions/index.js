@@ -144,6 +144,7 @@ exports.populateData = functions.https.onRequest((req, res) => {
       race: "Spain",
       hairColor: "Black",
       eyeColor: "Black",
+      childFound: false,
       height: 1.8,
       weight: 78,
       imageUrl:
@@ -161,6 +162,7 @@ exports.populateData = functions.https.onRequest((req, res) => {
       race: "American",
       hairColor: "Black",
       eyeColor: "Black",
+      childFound: false,
       height: 1.93,
       weight: 80,
       imageUrl:
@@ -178,6 +180,7 @@ exports.populateData = functions.https.onRequest((req, res) => {
       race: "Indonesian",
       hairColor: "Black",
       eyeColor: "Black",
+      childFound: false,
       height: 1.5,
       weight: 60,
       imageUrl:
